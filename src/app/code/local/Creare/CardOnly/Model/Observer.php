@@ -8,7 +8,8 @@ class Creare_CardOnly_Model_Observer
         $method          = $event->getMethodInstance();
         $result          = $event->getResult();
 		$cardonly		 = false;
-		$restrict		 = array('mobilpay_cc');
+		$allow			 = array('mobilpay_cc');
+		// $restrict		 = array('mobilpay_cc');
 		
 		foreach (Mage::getSingleton('checkout/cart')->getQuote()->getAllVisibleItems() as $item)
 		{
@@ -17,7 +18,7 @@ class Creare_CardOnly_Model_Observer
 			}
 		}
 
-		if(in_array($method->getCode(), $restrict) && $cardonly){
+		if(!in_array($method->getCode(), $allow) && $cardonly){
 			$result->isAvailable = false;
 		}
 		
